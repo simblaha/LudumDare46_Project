@@ -36,26 +36,74 @@ public class Zombie : MonoBehaviour
         rb.velocity = move;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            //Kill Enemy
+            target = null;
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Food")
+        {
+            ChangeHealth(+1);
+            target = null;
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Player")
+        {
+            if (!collision.GetComponent<PlayerInteraction>().isHidden)
+            {
+                player = null;
+                target = null;
+                Destroy(collision.gameObject);
+                //Game Over
+            }
+        }
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        health = Mathf.Clamp(health + amount, 0, healthBase);
+        if (health == 0)
+        {
+            //Kill Zombie
+            //Game Over
+        }
+    }
+
     IEnumerator Behavior()
     {
-        while (true)
+        while (player != null)
         {
             if (target == null)
                 LookForTarget();
             else
             {
                 yield return MoveToTarget();
-                LookForTarget();
             }
         }
+        move = Vector2.zero;
     }
 
     IEnumerator MoveToTarget()
     {
-        while (Vector2.Distance(new Vector2(target.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y)) > 0.1f)
+        float distanceToTarget;
+        while (target != null)
         {
-            Vector2 direction = (new Vector2(target.position.x, transform.position.y) - new Vector2(transform.position.x, transform.position.y)).normalized;
-            move = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+            distanceToTarget = Vector2.Distance(new Vector2(target.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
+            if (distanceToTarget > 0.01f)
+            {
+                Vector2 direction = (new Vector2(target.position.x, 0) - new Vector2(transform.position.x, 0)).normalized;
+                move = new Vector2(direction.x * moveSpeed, 0);
+
+            }
+            else
+            {
+                move = Vector2.zero;
+                target = null;
+            }
+            LookForTarget();
             yield return new WaitForEndOfFrame();
         }
     }
@@ -127,7 +175,7 @@ public class Zombie : MonoBehaviour
         }
         if (newTarget != null)
             target = newTarget;
-        else
+        else if (player != null)
             target = player;
     }
 }
