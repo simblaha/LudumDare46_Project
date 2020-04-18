@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -8,11 +9,17 @@ public class PlayerInteraction : MonoBehaviour
     public GameObject foodPrefab;
     public int throwForce;
     public int foodCount;
+    public Text UI_FoodCount;
 
     [Header("Hiding")]
     public bool isHidden;
 
     private bool canHide;
+
+    private void Awake()
+    {
+        UI_FoodCount.text = foodCount + "";
+    }
 
     private void Update()
     {
@@ -25,6 +32,7 @@ public class PlayerInteraction : MonoBehaviour
                 GameObject food = Instantiate(foodPrefab, transform.position, Quaternion.identity);
                 food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
                 foodCount--;
+                UI_FoodCount.text = foodCount + "";
             }
         }
         if (canHide)

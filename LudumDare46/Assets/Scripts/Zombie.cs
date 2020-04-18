@@ -1,39 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Zombie : MonoBehaviour
 {
     [Header("Basic Stats")]
     public int healthBase;
+    public Vector2 healthBarOffset;
     public float moveSpeed;
     [Header("TargetDetection")]
     public int detectionRange;
     public LayerMask detectedLayers;
     public Transform target;
 
-    [HideInInspector]
     public int health;
     private Vector2 move;
     private Rigidbody2D rb;
     private Transform player;
+    private GameObject healthBar;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player").transform;
+        healthBar = GameObject.Find("Zombie_HealthBar");
+        healthBar.transform.position = Camera.main.WorldToScreenPoint((Vector2)transform.position + healthBarOffset);
         health = healthBase;
         target = player;
     }
 
     private void Start()
     {
+        ChangeHealth(-5);
         StartCoroutine(Behavior());
     }
 
     private void Update()
     {
         rb.velocity = move;
+        healthBar.transform.position = Camera.main.WorldToScreenPoint((Vector2)transform.position + healthBarOffset);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,6 +71,7 @@ public class Zombie : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         health = Mathf.Clamp(health + amount, 0, healthBase);
+        healthBar.transform.Find("Fill").GetComponent<Image>().fillAmount = (float)health / (float)healthBase;
         if (health == 0)
         {
             //Kill Zombie
