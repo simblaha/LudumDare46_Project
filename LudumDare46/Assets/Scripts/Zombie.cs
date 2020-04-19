@@ -14,11 +14,17 @@ public class Zombie : MonoBehaviour
     public LayerMask detectedLayers;
     public Transform target;
 
+    [Header("Misc")]
+    public GameObject feedEffect;
+    public int healthGainPerFood;
+    public float feedDuration;
+
     public int health;
     private Vector2 move;
     private Rigidbody2D rb;
     private Transform player;
     private GameObject healthBar;
+    private bool isFeeding;
 
     private void Awake()
     {
@@ -52,9 +58,12 @@ public class Zombie : MonoBehaviour
         }
         else if (collision.tag == "Food")
         {
-            ChangeHealth(+1);
-            target = null;
-            Destroy(collision.gameObject);
+            if (!isFeeding)
+            {
+                target = null;
+                Destroy(collision.gameObject);
+                StartCoroutine(Feed());
+            }
         }
         else if (collision.tag == "Player")
         {
@@ -83,7 +92,8 @@ public class Zombie : MonoBehaviour
     {
         while (true)
         {
-            LookForTarget();
+            if (!isFeeding)
+                LookForTarget();
             if (target == null)
                 yield return new WaitForEndOfFrame();
             else
@@ -93,10 +103,19 @@ public class Zombie : MonoBehaviour
         }
     }
 
+    IEnumerator Feed()
+    {
+        isFeeding = true;
+        Destroy(Instantiate(feedEffect, transform.position, Quaternion.identity), feedDuration + 1);
+        yield return new WaitForSeconds(feedDuration);
+        ChangeHealth(+healthGainPerFood);
+        isFeeding = false;
+    }
+
     IEnumerator MoveToTarget()
     {
         float distanceToTarget;
-        while (target != null)
+        while (target != null && !isFeeding)
         {
             distanceToTarget = Vector2.Distance(new Vector2(target.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
             if (distanceToTarget > 0.01f)

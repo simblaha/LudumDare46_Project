@@ -84,13 +84,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBase: 10
-  healthBarOffset: {x: 0, y: 0}
-  moveSpeed: 1
-  detectionRange: 2
+  healthBarOffset: {x: 0, y: 1}
+  moveSpeed: 0.5
+  detectionRange: 2.5
   detectedLayers:
     serializedVersion: 2
     m_Bits: 6144
   target: {fileID: 0}
+  feedEffect: {fileID: 2562925690948966713, guid: 021a2f259eb8f5749a80ce2af6721128,
+    type: 3}
+  healthGainPerFood: 1
   health: 0
 --- !u!1 &2216824050137536513
 GameObject:
@@ -159,8 +162,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1150007273
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
