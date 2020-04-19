@@ -10,7 +10,7 @@ public class Zombie : MonoBehaviour
     public Vector2 healthBarOffset;
     public float moveSpeed;
     [Header("TargetDetection")]
-    public int detectionRange;
+    public float detectionRange;
     public LayerMask detectedLayers;
     public Transform target;
 
@@ -33,7 +33,7 @@ public class Zombie : MonoBehaviour
     private void Start()
     {
         ChangeHealth(-5);
-        StartCoroutine(Behavior());
+        StartCoroutine(Behaviour());
     }
 
     private void Update()
@@ -79,18 +79,18 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    IEnumerator Behavior()
+    IEnumerator Behaviour()
     {
-        while (player != null)
+        while (true)
         {
+            LookForTarget();
             if (target == null)
-                LookForTarget();
+                yield return new WaitForEndOfFrame();
             else
             {
                 yield return MoveToTarget();
             }
         }
-        move = Vector2.zero;
     }
 
     IEnumerator MoveToTarget()
@@ -113,6 +113,7 @@ public class Zombie : MonoBehaviour
             LookForTarget();
             yield return new WaitForEndOfFrame();
         }
+        move = Vector2.zero;
     }
 
     void LookForTarget()
@@ -182,7 +183,11 @@ public class Zombie : MonoBehaviour
         }
         if (newTarget != null)
             target = newTarget;
-        else if (player != null)
-            target = player;
+        else
+        {
+            if (player != null)
+                if (!player.GetComponent<PlayerInteraction>().isHidden)
+                    target = player;
+        }
     }
 }

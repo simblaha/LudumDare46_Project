@@ -12,6 +12,7 @@ public class PlayerInteraction : MonoBehaviour
     public Text UI_FoodCount;
 
     [Header("Hiding")]
+    public GameObject hideEffect;
     public bool isHidden;
 
     private bool canHide;
@@ -33,19 +34,28 @@ public class PlayerInteraction : MonoBehaviour
                 food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
+                isHidden = false;
             }
         }
         if (canHide)
         {
             if (Input.GetAxisRaw("Vertical") > 0.1f)
             {
-                //Activate Hide Effect
-                isHidden = true;
+                if (!isHidden)
+                {
+                    //Activate Hide Visual
+                    Destroy(Instantiate(hideEffect, transform.position, Quaternion.identity), 1f);
+                    isHidden = true;
+                }
             }
             if (Input.GetAxisRaw("Vertical") < -0.1f)
             {
-                //Deactivate Hide Effect
-                isHidden = false;
+                if (isHidden)
+                {
+                    //Deactivate Hide Visual
+                    Destroy(Instantiate(hideEffect, transform.position, Quaternion.identity), 1f);
+                    isHidden = false;
+                }
             }
         }
     }
@@ -61,7 +71,10 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.tag == "HidingSpot")
         {
             if (isHidden)
+            {
+                Destroy(Instantiate(hideEffect, transform.position, Quaternion.identity), 1f);
                 isHidden = false;
+            }
             canHide = false;
         }
     }
