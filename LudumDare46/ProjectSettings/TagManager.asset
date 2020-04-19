@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Food
   - Enemy
+  - HidingSpot
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -42,4 +44,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1327291485
+    locked: 0
+  - name: Ground
+    uniqueID: 2143276109
+    locked: 0
+  - name: Asset
+    uniqueID: 726371113
+    locked: 0
+  - name: Player
+    uniqueID: 2720335041
+    locked: 0
+  - name: NPC
+    uniqueID: 1150007273
+    locked: 0
+  - name: Effect
+    uniqueID: 1696397071
     locked: 0

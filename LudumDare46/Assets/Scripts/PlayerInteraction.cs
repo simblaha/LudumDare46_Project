@@ -12,12 +12,18 @@ public class PlayerInteraction : MonoBehaviour
     public Text UI_FoodCount;
 
     [Header("Hiding")]
+    public GameObject hideVFX;
+    public AudioClip[] hideSFX;
     public bool isHidden;
 
     private bool canHide;
+    private AudioSource audioSource;
+    private SpriteRenderer sr;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        sr = GetComponentInChildren<SpriteRenderer>();
         UI_FoodCount.text = foodCount + "";
     }
 
@@ -33,21 +39,36 @@ public class PlayerInteraction : MonoBehaviour
                 food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
+                isHidden = false;
             }
         }
         if (canHide)
         {
             if (Input.GetAxisRaw("Vertical") > 0.1f)
             {
-                //Activate Hide Effect
-                isHidden = true;
+                if (!isHidden)
+                {
+                    Hide(true);
+                }
             }
             if (Input.GetAxisRaw("Vertical") < -0.1f)
             {
-                //Deactivate Hide Effect
-                isHidden = false;
+                if (isHidden)
+                {
+                    Hide(false);
+                }
             }
         }
+    }
+
+    void Hide(bool state)
+    {
+        Color newColor = sr.color;
+        newColor.a = state ? 0.5f : 1f;
+        sr.color = newColor;
+        Destroy(Instantiate(hideVFX, transform.position, Quaternion.identity), 1f);
+        audioSource.PlayOneShot(hideSFX[Random.Range(0, hideSFX.Length - 1)], 0.25f);
+        isHidden = state;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -61,7 +82,9 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.tag == "HidingSpot")
         {
             if (isHidden)
-                isHidden = false;
+            {
+                Hide(false);
+            }
             canHide = false;
         }
     }

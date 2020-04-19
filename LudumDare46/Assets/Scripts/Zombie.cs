@@ -10,15 +10,22 @@ public class Zombie : MonoBehaviour
     public Vector2 healthBarOffset;
     public float moveSpeed;
     [Header("TargetDetection")]
-    public int detectionRange;
+    public float detectionRange;
     public LayerMask detectedLayers;
     public Transform target;
+
+    [Header("Misc")]
+    public GameObject feedEffect;
+    public int healthGainPerFood;
+    public float feedDuration;
 
     public int health;
     private Vector2 move;
     private Rigidbody2D rb;
     private Transform player;
     private GameObject healthBar;
+    private Vector2 lastPlayerPosition;
+    private bool isFeeding;
 
     private void Awake()
     {
@@ -33,7 +40,7 @@ public class Zombie : MonoBehaviour
     private void Start()
     {
         ChangeHealth(-5);
-        StartCoroutine(Behavior());
+        StartCoroutine(Behaviour());
     }
 
     private void Update()
@@ -52,9 +59,12 @@ public class Zombie : MonoBehaviour
         }
         else if (collision.tag == "Food")
         {
-            ChangeHealth(+1);
-            target = null;
-            Destroy(collision.gameObject);
+            if (!isFeeding)
+            {
+                target = null;
+                Destroy(collision.gameObject);
+                StartCoroutine(Feed());
+            }
         }
         else if (collision.tag == "Player")
         {
@@ -64,6 +74,19 @@ public class Zombie : MonoBehaviour
                 target = null;
                 Destroy(collision.gameObject);
                 //Game Over
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Food")
+        {
+            if (!isFeeding)
+            {
+                target = null;
+                Destroy(collision.gameObject);
+                StartCoroutine(Feed());
             }
         }
     }
@@ -79,44 +102,75 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    IEnumerator Behavior()
+    IEnumerator Behaviour()
     {
-        while (player != null)
+        while (true)
         {
+            if (!isFeeding)
+                UpdateTarget();
             if (target == null)
-                LookForTarget();
+                yield return MoveToLastPlayerPosition();
             else
             {
                 yield return MoveToTarget();
             }
         }
-        move = Vector2.zero;
+    }
+
+    IEnumerator Feed()
+    {
+        isFeeding = true;
+        Destroy(Instantiate(feedEffect, transform.position, Quaternion.identity), feedDuration + 1);
+        yield return new WaitForSeconds(feedDuration);
+        ChangeHealth(+healthGainPerFood);
+        isFeeding = false;
     }
 
     IEnumerator MoveToTarget()
     {
         float distanceToTarget;
-        while (target != null)
+        while (target != null && !isFeeding)
         {
             distanceToTarget = Vector2.Distance(new Vector2(target.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
             if (distanceToTarget > 0.01f)
             {
                 Vector2 direction = (new Vector2(target.position.x, 0) - new Vector2(transform.position.x, 0)).normalized;
                 move = new Vector2(direction.x * moveSpeed, 0);
-
             }
             else
             {
                 move = Vector2.zero;
-                target = null;
             }
-            LookForTarget();
             yield return new WaitForEndOfFrame();
+            UpdateTarget();
         }
+        move = Vector2.zero;
     }
 
-    void LookForTarget()
+    IEnumerator MoveToLastPlayerPosition()
     {
+        float distanceToTarget;
+        while (target == null && !isFeeding)
+        {
+            distanceToTarget = Vector2.Distance(new Vector2(lastPlayerPosition.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
+            if (distanceToTarget > 0.01f)
+            {
+                Vector2 direction = (new Vector2(lastPlayerPosition.x, 0) - new Vector2(transform.position.x, 0)).normalized;
+                move = new Vector2(direction.x * moveSpeed, 0);
+            }
+            else
+            {
+                move = Vector2.zero;
+            }
+            yield return new WaitForEndOfFrame();
+            UpdateTarget();
+        }
+        move = Vector2.zero;
+    }
+
+    void UpdateTarget()
+    {
+        target = null;
         Transform newTarget = null;
         RaycastHit2D[] hitsLeft = Physics2D.RaycastAll(transform.position, Vector2.left, detectionRange, detectedLayers);
         RaycastHit2D[] hitsRight = Physics2D.RaycastAll(transform.position, Vector2.right, detectionRange, detectedLayers);
@@ -182,7 +236,14 @@ public class Zombie : MonoBehaviour
         }
         if (newTarget != null)
             target = newTarget;
-        else if (player != null)
-            target = player;
+        else
+        {
+            if (player != null)
+                if (!player.GetComponent<PlayerInteraction>().isHidden)
+                {
+                    lastPlayerPosition = player.transform.position;
+                    target = player;
+                }
+        }
     }
 }

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4836286215387858850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.32, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4836286215519362990}
@@ -84,8 +84,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bc2dbad3a295944bd325eb8c894bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1
+  climbSpeed: 0
   jumpForce: 200
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &-4605906181705924411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +106,13 @@ MonoBehaviour:
     type: 3}
   throwForce: 200
   foodCount: 10
+  UI_FoodCount: {fileID: 0}
+  hideVFX: {fileID: 2562925690948966713, guid: 4c41f55fe215ef043ad5a5f9ac9b8caa, type: 3}
+  hideSFX:
+  - {fileID: 8300000, guid: f18b868268f6bfd41849d9b24dd0e25d, type: 3}
+  - {fileID: 8300000, guid: 6047eaac5673fbf4b8d905bd9da0e167, type: 3}
+  - {fileID: 8300000, guid: 6d9fdc4bb949675459cf7d823279f812, type: 3}
+  - {fileID: 8300000, guid: 45969c1811990a144a4f2e0b8bdf1a98, type: 3}
   isHidden: 0
 --- !u!1 &4836286215519362991
 GameObject:
@@ -170,8 +181,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1574632255
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
