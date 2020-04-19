@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  climbSpeed: 0
   jumpForce: 200
   groundLayer:
     serializedVersion: 2
@@ -106,8 +107,12 @@ MonoBehaviour:
   throwForce: 200
   foodCount: 10
   UI_FoodCount: {fileID: 0}
-  hideEffect: {fileID: 2562925690948966713, guid: 4c41f55fe215ef043ad5a5f9ac9b8caa,
-    type: 3}
+  hideVFX: {fileID: 2562925690948966713, guid: 4c41f55fe215ef043ad5a5f9ac9b8caa, type: 3}
+  hideSFX:
+  - {fileID: 8300000, guid: f18b868268f6bfd41849d9b24dd0e25d, type: 3}
+  - {fileID: 8300000, guid: 6047eaac5673fbf4b8d905bd9da0e167, type: 3}
+  - {fileID: 8300000, guid: 6d9fdc4bb949675459cf7d823279f812, type: 3}
+  - {fileID: 8300000, guid: 45969c1811990a144a4f2e0b8bdf1a98, type: 3}
   isHidden: 0
 --- !u!1 &4836286215519362991
 GameObject:
