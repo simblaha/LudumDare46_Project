@@ -31,11 +31,15 @@ public class Zombie : MonoBehaviour
     private Vector2 lastPlayerPosition;
     private bool isFeeding;
     private AudioSource audioSource;
+    private Animator animator;
+    private Vector2 facingDirection;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
+        facingDirection = Vector2.right;
         player = GameObject.Find("Player").transform;
         healthBar = GameObject.Find("Zombie_HealthBar");
         healthBar.transform.position = Camera.main.WorldToScreenPoint((Vector2)transform.position + healthBarOffset);
@@ -50,6 +54,14 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
+        if (move.x != 0)
+            animator.SetBool("isWalking", true);
+        else
+            animator.SetBool("isWalking", false);
+        if (move.x > 0)
+            Turn(1);
+        else if (move.x < 0)
+            Turn(-1);
         rb.velocity = move;
         healthBar.transform.position = Camera.main.WorldToScreenPoint((Vector2)transform.position + healthBarOffset);
     }
@@ -132,10 +144,12 @@ public class Zombie : MonoBehaviour
     IEnumerator Feed()
     {
         isFeeding = true;
+        animator.SetBool("isFeeding", true);
         Destroy(Instantiate(feedEffect, transform.position, Quaternion.identity), feedDuration + 1);
         yield return new WaitForSeconds(feedDuration);
         ChangeHealth(+healthGainPerFood, true);
         isFeeding = false;
+        animator.SetBool("isFeeding", false);
     }
 
     IEnumerator MoveToTarget()
@@ -148,6 +162,7 @@ public class Zombie : MonoBehaviour
             {
                 Vector2 direction = (new Vector2(target.position.x, 0) - new Vector2(transform.position.x, 0)).normalized;
                 move = new Vector2(direction.x * moveSpeed, 0);
+                
             }
             else
             {
@@ -257,5 +272,11 @@ public class Zombie : MonoBehaviour
                     target = player;
                 }
         }
+    }
+
+    void Turn(int value)
+    {
+        transform.localScale = new Vector3(value, 1, 1);
+        facingDirection = new Vector2(value, 0);
     }
 }

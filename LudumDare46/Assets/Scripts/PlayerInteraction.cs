@@ -19,9 +19,11 @@ public class PlayerInteraction : MonoBehaviour
     private bool canHide;
     private AudioSource audioSource;
     private SpriteRenderer sr;
+    private Animator animator;
 
     private void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
         sr = GetComponentInChildren<SpriteRenderer>();
         UI_FoodCount.text = foodCount + "";
@@ -40,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
                 isHidden = false;
+                animator.SetTrigger("Throw");
             }
         }
         if (canHide)
