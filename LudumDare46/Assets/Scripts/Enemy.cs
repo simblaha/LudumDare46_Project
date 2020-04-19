@@ -99,8 +99,6 @@ public class Enemy : MonoBehaviour
                 target = hit.transform;
             }
         }
-
-        
     }
 
     void AttackTarget()
@@ -112,7 +110,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            target.GetComponent<Zombie>().ChangeHealth(-attackDamage);
+            target.GetComponent<Zombie>().ChangeHealth(-attackDamage, isMelee);
         }
     }
 

@@ -94,6 +94,12 @@ MonoBehaviour:
   feedEffect: {fileID: 2562925690948966713, guid: 021a2f259eb8f5749a80ce2af6721128,
     type: 3}
   healthGainPerFood: 1
+  feedDuration: 0
+  hitVFX: {fileID: 0}
+  hitSFX:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   health: 0
 --- !u!1 &2216824050137536513
 GameObject:

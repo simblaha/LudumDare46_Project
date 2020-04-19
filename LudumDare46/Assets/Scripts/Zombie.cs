@@ -9,6 +9,7 @@ public class Zombie : MonoBehaviour
     public int healthBase;
     public Vector2 healthBarOffset;
     public float moveSpeed;
+
     [Header("TargetDetection")]
     public float detectionRange;
     public LayerMask detectedLayers;
@@ -18,6 +19,9 @@ public class Zombie : MonoBehaviour
     public GameObject feedEffect;
     public int healthGainPerFood;
     public float feedDuration;
+    public GameObject hitVFX;
+    public AudioClip[] hitMeleeSFX;
+    public AudioClip[] hitRangeSFX;
 
     public int health;
     private Vector2 move;
@@ -26,9 +30,11 @@ public class Zombie : MonoBehaviour
     private GameObject healthBar;
     private Vector2 lastPlayerPosition;
     private bool isFeeding;
+    private AudioSource audioSource;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player").transform;
         healthBar = GameObject.Find("Zombie_HealthBar");
@@ -39,7 +45,6 @@ public class Zombie : MonoBehaviour
 
     private void Start()
     {
-        ChangeHealth(-5);
         StartCoroutine(Behaviour());
     }
 
@@ -91,14 +96,21 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    public void ChangeHealth(int amount)
+    public void ChangeHealth(int amount, bool melee)
     {
         health = Mathf.Clamp(health + amount, 0, healthBase);
         healthBar.transform.Find("Fill").GetComponent<Image>().fillAmount = (float)health / (float)healthBase;
+        if (amount < 0)
+        {
+            Destroy(Instantiate(hitVFX, transform.position, Quaternion.identity), 3f);
+            if (melee)
+                audioSource.PlayOneShot(hitMeleeSFX[Random.Range(0, hitMeleeSFX.Length - 1)], 0.1f);
+            else
+                audioSource.PlayOneShot(hitRangeSFX[Random.Range(0, hitRangeSFX.Length - 1)], 0.1f);
+        }
         if (health == 0)
         {
-            //Kill Zombie
-            //Game Over
+            Destroy(gameObject);
         }
     }
 
@@ -122,7 +134,7 @@ public class Zombie : MonoBehaviour
         isFeeding = true;
         Destroy(Instantiate(feedEffect, transform.position, Quaternion.identity), feedDuration + 1);
         yield return new WaitForSeconds(feedDuration);
-        ChangeHealth(+healthGainPerFood);
+        ChangeHealth(+healthGainPerFood, true);
         isFeeding = false;
     }
 
