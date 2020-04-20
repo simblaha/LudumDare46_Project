@@ -57,6 +57,9 @@ TagManager:
   - name: Background Front
     uniqueID: 3118717421
     locked: 0
+  - name: Trap
+    uniqueID: 509460039
+    locked: 0
   - name: Ground
     uniqueID: 2143276109
     locked: 0
