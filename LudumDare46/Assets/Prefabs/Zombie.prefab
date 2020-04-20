@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 344199845}
   m_Layer: 10
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBase: 10
   healthBarOffset: {x: 0, y: 1}
-  moveSpeed: 1.1
+  moveSpeed: 0.1
   detectionRange: 2.5
   detectedLayers:
     serializedVersion: 2

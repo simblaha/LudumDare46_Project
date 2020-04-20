@@ -81,6 +81,8 @@ public class Enemy : MonoBehaviour
             LookForTarget();
             yield return new WaitForEndOfFrame();
         }
+        move = Vector2.zero;
+        rb.velocity = move;
     }
 
     void LookForTarget()

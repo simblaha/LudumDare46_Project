@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - HidingSpot
   - Ladder
+  - Trap
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Enemy
   - Food
   - Platform
-  - 
+  - Trigger
   - 
   - 
   - 
