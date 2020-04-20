@@ -133,6 +133,8 @@ MonoBehaviour:
   retractSpeed: 1
   extendAmount: 0.1
   spikeTrapSFX: {fileID: 0}
+  deathEffect: {fileID: 7822017693588085999, guid: e6d8de654bcf8554597d779131d8eb59,
+    type: 3}
 --- !u!82 &7192812667041133692
 AudioSource:
   m_ObjectHideFlags: 0

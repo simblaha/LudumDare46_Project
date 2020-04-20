@@ -54,7 +54,8 @@ public class Enemy : MonoBehaviour
                         yield return MoveToTarget();
                     else
                     {
-                        anim.SetTrigger("Attack");
+                        if (anim)
+                            anim.SetTrigger("Attack");
                         yield return new WaitForSeconds(animationDurationMelee);
                         AttackTarget();
                         yield return new WaitForSeconds(attackSpeed - animationDurationMelee);
