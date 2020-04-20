@@ -54,8 +54,7 @@ public class Enemy : MonoBehaviour
                         yield return MoveToTarget();
                     else
                     {
-                        if (anim)
-                            anim.SetTrigger("Attack");
+                        anim.SetTrigger("Attack");
                         yield return new WaitForSeconds(animationDurationMelee);
                         AttackTarget();
                         yield return new WaitForSeconds(attackSpeed - animationDurationMelee);
@@ -83,9 +82,11 @@ public class Enemy : MonoBehaviour
                 Vector2 direction = (new Vector2(target.position.x, 0) - new Vector2(transform.position.x, 0)).normalized;
                 move = new Vector2(direction.x * moveSpeed, 0);
                 rb.velocity = move;
+                anim.SetBool("IsWalking", true);
             }
             else
             {
+                anim.SetBool("IsWalking", false);
                 move = Vector2.zero;
                 rb.velocity = move;
                 inRange = true;
@@ -94,6 +95,7 @@ public class Enemy : MonoBehaviour
             LookForTarget();
             yield return new WaitForEndOfFrame();
         }
+        anim.SetBool("IsWalking", false);
         move = Vector2.zero;
         rb.velocity = move;
     }
