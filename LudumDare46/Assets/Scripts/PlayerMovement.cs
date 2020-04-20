@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             canClimb = true;
         if (collision.tag == "Goal")
         {
-            if (SceneManager.sceneCount > SceneManager.GetActiveScene().buildIndex)
+            if (SceneManager.sceneCount >= SceneManager.GetActiveScene().buildIndex)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             else
                 Application.Quit();

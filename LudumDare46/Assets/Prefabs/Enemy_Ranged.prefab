@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19271ae35b3ab02469560e2744230586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 1
+  attackDamage: 2
   attackSpeed: 1
   moveSpeed: 1
   isMelee: 0

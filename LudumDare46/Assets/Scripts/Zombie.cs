@@ -126,6 +126,7 @@ public class Zombie : MonoBehaviour
         if (health == 0)
         {
             Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(healthBar);
             Destroy(gameObject);
         }
     }

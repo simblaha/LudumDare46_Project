@@ -5,23 +5,24 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     private GameObject player;
+    private GameObject zombie;
     private GameObject menuPanel;
 
     private void Awake()
     {
         player = GameObject.Find("Player");
+        zombie = GameObject.Find("Zombie");
         menuPanel = GameObject.Find("MenuPanel");
         menuPanel.SetActive(false);
     }
 
     private void Update()
     {
-        if (player == null)
+        if (player == null || zombie == null)
         {
             if (!menuPanel.activeSelf)
             {
-                Time.timeScale = 0;
-                menuPanel.SetActive(true);
+                StartCoroutine(GameOver());
             }
         }
         else
@@ -32,5 +33,12 @@ public class UIManager : MonoBehaviour
                 menuPanel.SetActive(!menuPanel.activeSelf);
             }
         }
+    }
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(2f);
+        Time.timeScale = 0;
+        menuPanel.SetActive(true);
     }
 }
