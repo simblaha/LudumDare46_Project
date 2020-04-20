@@ -22,7 +22,6 @@ public class Zombie : MonoBehaviour
     public GameObject hitEffect;
     public GameObject deathEffect;
     public AudioClip[] hitMeleeSFX;
-    public AudioClip[] hitRangeSFX;
     public AudioClip[] idleSFX;
 
     public int health;
@@ -111,17 +110,14 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    public void ChangeHealth(int amount, bool melee)
+    public void ChangeHealth(int amount)
     {
         health = Mathf.Clamp(health + amount, 0, healthBase);
         healthBar.transform.Find("Fill").GetComponent<Image>().fillAmount = (float)health / (float)healthBase;
         if (amount < 0)
         {
             Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 3f);
-            if (melee)
-                audioSource.PlayOneShot(hitMeleeSFX[Random.Range(0, hitMeleeSFX.Length - 1)], 0.1f);
-            else
-                audioSource.PlayOneShot(hitRangeSFX[Random.Range(0, hitRangeSFX.Length - 1)], 0.1f);
+            audioSource.PlayOneShot(hitMeleeSFX[Random.Range(0, hitMeleeSFX.Length - 1)], 0.1f);
         }
         if (health == 0)
         {
@@ -152,7 +148,7 @@ public class Zombie : MonoBehaviour
         animator.SetBool("isFeeding", true);
         Destroy(Instantiate(feedEffect, transform.position, Quaternion.identity), feedDuration + 1);
         yield return new WaitForSeconds(feedDuration);
-        ChangeHealth(+healthGainPerFood, true);
+        ChangeHealth(+healthGainPerFood);
         isFeeding = false;
         animator.SetBool("isFeeding", false);
     }

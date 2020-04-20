@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     public float meleeAttackRange;
     public bool turnLeft;
     public GameObject deathEffect;
+    public AudioClip[] shootSFX;
+    public float animationDurationMelee;
+    public float animationDurationRange;
 
     [Header("TargetDetection")]
     public float detectionRange;
@@ -22,10 +25,14 @@ public class Enemy : MonoBehaviour
     private Vector2 facingDirection;
     private bool inRange = false;
     private Rigidbody2D rb;
+    private AudioSource audioSource;
+    private Animator anim;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+        anim = GetComponentInChildren<Animator>();
         facingDirection = Vector2.right;
         if (turnLeft)
             Turn(-1);
@@ -47,14 +54,18 @@ public class Enemy : MonoBehaviour
                         yield return MoveToTarget();
                     else
                     {
+                        anim.SetTrigger("Attack");
+                        yield return new WaitForSeconds(animationDurationMelee);
                         AttackTarget();
-                        yield return new WaitForSeconds(attackSpeed);
+                        yield return new WaitForSeconds(attackSpeed - animationDurationMelee);
                     }
                 }
                 else
                 {
+                    anim.SetTrigger("Attack");
+                    yield return new WaitForSeconds(animationDurationRange);
                     AttackTarget();
-                    yield return new WaitForSeconds(attackSpeed);
+                    yield return new WaitForSeconds(attackSpeed - animationDurationRange);
                 }
             }
         }
@@ -106,6 +117,8 @@ public class Enemy : MonoBehaviour
 
     void AttackTarget()
     {
+        if (!isMelee)
+            audioSource.PlayOneShot(shootSFX[Random.Range(0, shootSFX.Length - 1)], 0.1f);
         if (target.tag == "Player")
         {
             Destroy(Instantiate(deathEffect, target.transform.position, Quaternion.identity), 5f);
@@ -113,7 +126,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            target.GetComponent<Zombie>().ChangeHealth(-attackDamage, isMelee);
+            target.GetComponent<Zombie>().ChangeHealth(-attackDamage);
         }
     }
 

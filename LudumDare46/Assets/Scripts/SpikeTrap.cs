@@ -63,7 +63,7 @@ public class SpikeTrap : MonoBehaviour
         Debug.Log("Hit");
         if (collision.tag == "Zombie")
         {
-            collision.GetComponent<Zombie>().ChangeHealth(-damage, true);
+            collision.GetComponent<Zombie>().ChangeHealth(-damage);
         }
         else
         {
