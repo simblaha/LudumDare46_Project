@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1264488436642982312}
   - component: {fileID: 1264488436642982313}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: TrapTrigger_GFX
   m_TagString: Trap
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1264488437275516275}
   - component: {fileID: 5894596978091638959}
   - component: {fileID: 9207941043248792593}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: TrapTrigger
   m_TagString: Trap
   m_Icon: {fileID: 0}

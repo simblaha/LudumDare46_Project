@@ -84,9 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2e7d4c3c7f92c4baae71bbfcacb697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBase: 10
+  healthBase: 5
   healthBarOffset: {x: 0, y: 1}
-  moveSpeed: 0.1
+  moveSpeed: 1
   detectionRange: 2.5
   detectedLayers:
     serializedVersion: 2

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4020029766436362029}
   - component: {fileID: 7911465161314869886}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: HidingSpot
   m_TagString: HidingSpot
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4020029766860760054}
   - component: {fileID: 4020029766860760055}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: HidingSpot_GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
