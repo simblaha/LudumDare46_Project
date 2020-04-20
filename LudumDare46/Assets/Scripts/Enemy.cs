@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public bool isMelee;
     public float meleeAttackRange;
     public bool turnLeft;
+    public GameObject deathEffect;
 
     [Header("TargetDetection")]
     public float detectionRange;
@@ -107,8 +108,8 @@ public class Enemy : MonoBehaviour
     {
         if (target.tag == "Player")
         {
+            Destroy(Instantiate(deathEffect, target.transform.position, Quaternion.identity), 5f);
             Destroy(target.gameObject);
-            //GameOver
         }
         else
         {

@@ -89,6 +89,8 @@ MonoBehaviour:
   isMelee: 1
   meleeAttackRange: 0.5
   turnLeft: 1
+  deathEffect: {fileID: 7822017693588085999, guid: e6d8de654bcf8554597d779131d8eb59,
+    type: 3}
   detectionRange: 2
   detectedLayers:
     serializedVersion: 2

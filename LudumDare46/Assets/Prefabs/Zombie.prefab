@@ -96,7 +96,10 @@ MonoBehaviour:
     type: 3}
   healthGainPerFood: 1
   feedDuration: 2
-  hitVFX: {fileID: 7822017693588085999, guid: ccaad33cc085cc44c8a16a67b1fabe09, type: 3}
+  hitEffect: {fileID: 7822017693588085999, guid: ccaad33cc085cc44c8a16a67b1fabe09,
+    type: 3}
+  deathEffect: {fileID: 7822017693588085999, guid: e6d8de654bcf8554597d779131d8eb59,
+    type: 3}
   hitMeleeSFX:
   - {fileID: 8300000, guid: 15242ffdb6eff2b4090788aedfefb445, type: 3}
   - {fileID: 8300000, guid: 32870e58e66bff747a5a2b38614d661f, type: 3}

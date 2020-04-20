@@ -10,6 +10,7 @@ TagManager:
   - Ladder
   - Trap
   - Zombie
+  - Goal
   layers:
   - Default
   - TransparentFX

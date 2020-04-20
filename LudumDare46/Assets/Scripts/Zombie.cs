@@ -19,7 +19,8 @@ public class Zombie : MonoBehaviour
     public GameObject feedEffect;
     public int healthGainPerFood;
     public float feedDuration;
-    public GameObject hitVFX;
+    public GameObject hitEffect;
+    public GameObject deathEffect;
     public AudioClip[] hitMeleeSFX;
     public AudioClip[] hitRangeSFX;
     public AudioClip[] idleSFX;
@@ -71,8 +72,8 @@ public class Zombie : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            //Kill Enemy
             target = null;
+            Destroy(Instantiate(deathEffect, collision.transform.position, Quaternion.identity), 5f);
             Destroy(collision.gameObject);
             StartCoroutine(Feed());
         }
@@ -91,8 +92,8 @@ public class Zombie : MonoBehaviour
             {
                 player = null;
                 target = null;
+                Destroy(Instantiate(deathEffect, collision.transform.position, Quaternion.identity), 5f);
                 Destroy(collision.gameObject);
-                //Game Over
             }
         }
     }
@@ -116,7 +117,7 @@ public class Zombie : MonoBehaviour
         healthBar.transform.Find("Fill").GetComponent<Image>().fillAmount = (float)health / (float)healthBase;
         if (amount < 0)
         {
-            Destroy(Instantiate(hitVFX, transform.position, Quaternion.identity), 3f);
+            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 3f);
             if (melee)
                 audioSource.PlayOneShot(hitMeleeSFX[Random.Range(0, hitMeleeSFX.Length - 1)], 0.1f);
             else
@@ -124,6 +125,7 @@ public class Zombie : MonoBehaviour
         }
         if (health == 0)
         {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -73,6 +74,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.tag == "Ladder")
             canClimb = true;
+        if (collision.tag == "Goal")
+        {
+            if (SceneManager.sceneCount > SceneManager.GetActiveScene().buildIndex)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            else
+                Application.Quit();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
