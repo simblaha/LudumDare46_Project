@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 344199845}
   m_Layer: 10
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2e7d4c3c7f92c4baae71bbfcacb697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBase: 10
+  healthBase: 5
   healthBarOffset: {x: 0, y: 1}
   moveSpeed: 1
   detectionRange: 2.5
@@ -96,7 +96,10 @@ MonoBehaviour:
     type: 3}
   healthGainPerFood: 1
   feedDuration: 2
-  hitVFX: {fileID: 7822017693588085999, guid: ccaad33cc085cc44c8a16a67b1fabe09, type: 3}
+  hitEffect: {fileID: 7822017693588085999, guid: ccaad33cc085cc44c8a16a67b1fabe09,
+    type: 3}
+  deathEffect: {fileID: 7822017693588085999, guid: e6d8de654bcf8554597d779131d8eb59,
+    type: 3}
   hitMeleeSFX:
   - {fileID: 8300000, guid: 15242ffdb6eff2b4090788aedfefb445, type: 3}
   - {fileID: 8300000, guid: 32870e58e66bff747a5a2b38614d661f, type: 3}
@@ -105,6 +108,7 @@ MonoBehaviour:
   hitRangeSFX:
   - {fileID: 8300000, guid: a3d04124573854941aa203d2a3e5d078, type: 3}
   - {fileID: 8300000, guid: a74114af7bde20048a01424241d5bf1d, type: 3}
+  idleSFX: []
   health: 0
 --- !u!82 &344199845
 AudioSource:

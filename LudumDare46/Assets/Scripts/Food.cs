@@ -13,9 +13,13 @@ public class Food : MonoBehaviour
         audioSource.PlayOneShot(throwingSFX[Random.Range(0, throwingSFX.Length - 1)], 0.25f);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.transform.name);
-        audioSource.PlayOneShot(landingSFX, 0.25f);
+        if (collision.tag != "Player")
+        {
+            audioSource.PlayOneShot(landingSFX, 0.25f);
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+        }
     }
 }

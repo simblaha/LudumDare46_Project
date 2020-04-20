@@ -37,12 +37,13 @@ public class PlayerInteraction : MonoBehaviour
             {
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));
                 Vector2 direction = (mousePosition - transform.position).normalized;
-                GameObject food = Instantiate(foodPrefab, transform.position, Quaternion.identity);
+                GameObject food = Instantiate(foodPrefab, (Vector2)transform.position + Vector2.up * 0.25f, Quaternion.identity);
                 food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
-                isHidden = false;
                 animator.SetTrigger("Throw");
+                if (isHidden)
+                    Hide(false);
             }
         }
         if (canHide)
@@ -78,6 +79,15 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (collision.tag == "HidingSpot")
             canHide = true;
+        if (collision.tag == "Food")
+        {
+            if (collision.GetComponent<Rigidbody2D>().gravityScale == 0)
+            {
+                Destroy(collision.gameObject);
+                foodCount++;
+                UI_FoodCount.text = foodCount + "";
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

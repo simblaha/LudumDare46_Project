@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - HidingSpot
   - Ladder
+  - Trap
+  - Zombie
+  - Goal
   layers:
   - Default
   - TransparentFX
@@ -22,8 +25,8 @@ TagManager:
   - Zombie
   - Enemy
   - Food
-  - 
-  - 
+  - Platform
+  - Trigger
   - 
   - 
   - 

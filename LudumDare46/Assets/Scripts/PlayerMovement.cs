@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,17 +9,22 @@ public class PlayerMovement : MonoBehaviour
     public float climbSpeed;
     public int jumpForce;
     public LayerMask groundLayer;
+    public AudioClip[] footStepSFX;
+    public float footstepDelay;
 
     private Vector2 move;
     private Rigidbody2D rb;
     private bool canClimb;
+    private bool isWalking;
     private Animator animator;
     private Vector2 facingDirection;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
         facingDirection = Vector2.right;
     }
 
@@ -29,9 +35,19 @@ public class PlayerMovement : MonoBehaviour
         else
             move = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb.velocity.y);
         if (move.x != 0 && move.y == 0)
-            animator.SetBool("isWalking", true);
-        else
+        {
+            if (!isWalking)
+            {
+                isWalking = true;
+                StartCoroutine(FootSteps());
+                animator.SetBool("isWalking", true);
+            }
+        }
+        else if (isWalking)
+        {
+            isWalking = false;
             animator.SetBool("isWalking", false);
+        }
         if (move.x > 0)
             Turn(1);
         else if (move.x < 0)
@@ -58,6 +74,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.tag == "Ladder")
             canClimb = true;
+        if (collision.tag == "Goal")
+        {
+            if (SceneManager.sceneCount > SceneManager.GetActiveScene().buildIndex)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            else
+                Application.Quit();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -79,5 +102,14 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.localScale = new Vector3(value, 1, 1);
         facingDirection = new Vector2(value, 0);
+    }
+
+    IEnumerator FootSteps()
+    {
+        while(isWalking)
+        {
+            audioSource.PlayOneShot(footStepSFX[Random.Range(0, footStepSFX.Length - 1)], 0.1f);
+            yield return new WaitForSeconds(footstepDelay);
+        }
     }
 }
