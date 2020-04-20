@@ -48,8 +48,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: Background Back
     uniqueID: 1327291485
+    locked: 0
+  - name: Background Mid
+    uniqueID: 154417199
+    locked: 0
+  - name: Background Front
+    uniqueID: 3118717421
     locked: 0
   - name: Ground
     uniqueID: 2143276109
