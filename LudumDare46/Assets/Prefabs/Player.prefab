@@ -118,7 +118,7 @@ MonoBehaviour:
   foodPrefab: {fileID: 8385456892708440800, guid: d70dce6f08ad55146aa09e2b807e13b9,
     type: 3}
   throwForce: 250
-  foodCount: 10
+  foodCount: 0
   UI_FoodCount: {fileID: 0}
   hideVFX: {fileID: 991848999744502432, guid: ecab673b3d1bcaa479b0a7a3d94892fe, type: 3}
   hideSFX:
