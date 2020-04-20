@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBase: 10
   healthBarOffset: {x: 0, y: 1}
-  moveSpeed: 1
+  moveSpeed: 1.1
   detectionRange: 2.5
   detectedLayers:
     serializedVersion: 2
@@ -105,6 +105,7 @@ MonoBehaviour:
   hitRangeSFX:
   - {fileID: 8300000, guid: a3d04124573854941aa203d2a3e5d078, type: 3}
   - {fileID: 8300000, guid: a74114af7bde20048a01424241d5bf1d, type: 3}
+  idleSFX: []
   health: 0
 --- !u!82 &344199845
 AudioSource:

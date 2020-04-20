@@ -41,8 +41,9 @@ public class PlayerInteraction : MonoBehaviour
                 food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
-                isHidden = false;
                 animator.SetTrigger("Throw");
+                if (isHidden)
+                    Hide(false);
             }
         }
         if (canHide)

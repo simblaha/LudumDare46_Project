@@ -91,6 +91,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  footStepSFX:
+  - {fileID: 8300000, guid: 7e1fa587501c9c545b57f229c825f3fb, type: 3}
+  - {fileID: 8300000, guid: 22b21ef9bd55ef843a7e114948f2d2bf, type: 3}
+  - {fileID: 8300000, guid: 4954f2be26402974383978598a740ae3, type: 3}
+  - {fileID: 8300000, guid: cd357d8ec1236fc4db3421df1bef47d3, type: 3}
+  - {fileID: 8300000, guid: f9217996a75d8624095b9ed5c7d8f5bf, type: 3}
+  - {fileID: 8300000, guid: 631e7a6196e50964ea2c169feaa86e0b, type: 3}
+  - {fileID: 8300000, guid: 2484416e2b96837478204e42647f225b, type: 3}
+  - {fileID: 8300000, guid: b589c2b9fcdfb404fab4d1b65cc1a6f0, type: 3}
+  - {fileID: 8300000, guid: ebf39395c82b29b4f99dc05191b62b8d, type: 3}
+  - {fileID: 8300000, guid: d5fe8bef478ceaf41bcebe50ddd64f95, type: 3}
+  footstepDelay: 0.35
 --- !u!114 &-4605906181705924411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodPrefab: {fileID: 8385456892708440800, guid: d70dce6f08ad55146aa09e2b807e13b9,
     type: 3}
-  throwForce: 200
+  throwForce: 250
   foodCount: 10
   UI_FoodCount: {fileID: 0}
   hideVFX: {fileID: 991848999744502432, guid: ecab673b3d1bcaa479b0a7a3d94892fe, type: 3}

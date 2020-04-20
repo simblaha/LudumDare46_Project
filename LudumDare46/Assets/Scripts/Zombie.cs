@@ -22,6 +22,7 @@ public class Zombie : MonoBehaviour
     public GameObject hitVFX;
     public AudioClip[] hitMeleeSFX;
     public AudioClip[] hitRangeSFX;
+    public AudioClip[] idleSFX;
 
     public int health;
     private Vector2 move;
@@ -73,6 +74,7 @@ public class Zombie : MonoBehaviour
             //Kill Enemy
             target = null;
             Destroy(collision.gameObject);
+            StartCoroutine(Feed());
         }
         else if (collision.tag == "Food")
         {
@@ -158,7 +160,7 @@ public class Zombie : MonoBehaviour
         while (target != null && !isFeeding)
         {
             distanceToTarget = Vector2.Distance(new Vector2(target.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
-            if (distanceToTarget > 0.01f)
+            if (distanceToTarget > 0.1f)
             {
                 Vector2 direction = (new Vector2(target.position.x, 0) - new Vector2(transform.position.x, 0)).normalized;
                 move = new Vector2(direction.x * moveSpeed, 0);

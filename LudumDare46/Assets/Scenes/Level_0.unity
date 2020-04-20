@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 1368504307}
   - component: {fileID: 1368504306}
   - component: {fileID: 1368504305}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
