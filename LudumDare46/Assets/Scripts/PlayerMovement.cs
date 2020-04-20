@@ -76,10 +76,10 @@ public class PlayerMovement : MonoBehaviour
             canClimb = true;
         if (collision.tag == "Goal")
         {
-            if (SceneManager.sceneCount >= SceneManager.GetActiveScene().buildIndex)
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            else
+            if (SceneManager.GetActiveScene().name == "Level_5")
                 Application.Quit();
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

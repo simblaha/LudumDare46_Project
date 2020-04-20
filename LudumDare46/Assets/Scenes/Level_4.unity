@@ -1222,7 +1222,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1383265388
 PrefabInstance:
@@ -1236,11 +1236,6 @@ PrefabInstance:
       propertyPath: UI_FoodCount
       value: 
       objectReference: {fileID: 945749989}
-    - target: {fileID: -4605906181705924411, guid: c1457dc9867f1094897d4a14b99b6584,
-        type: 3}
-      propertyPath: foodCount
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4836286215387858850, guid: c1457dc9867f1094897d4a14b99b6584,
         type: 3}
       propertyPath: m_Name
@@ -1284,7 +1279,7 @@ PrefabInstance:
     - target: {fileID: 4836286215387858863, guid: c1457dc9867f1094897d4a14b99b6584,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4836286215387858863, guid: c1457dc9867f1094897d4a14b99b6584,
         type: 3}
