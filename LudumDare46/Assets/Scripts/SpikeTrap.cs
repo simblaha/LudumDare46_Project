@@ -11,6 +11,7 @@ public class SpikeTrap : MonoBehaviour
     public float extendAmount;
     public AudioClip spikeTrapSFX;
     public GameObject deathEffect;
+    public GameObject foodPrefab;
 
     private AudioSource audioSource;
     private Vector2 retractPosition;
@@ -69,6 +70,7 @@ public class SpikeTrap : MonoBehaviour
         else
         {
             Destroy(Instantiate(deathEffect, collision.transform.position, Quaternion.identity), 5f);
+            Instantiate(foodPrefab, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
         }
     }
