@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isWalking)
         {
             isWalking = false;
+            StopAllCoroutines();
             animator.SetBool("isWalking", false);
         }
         if (move.x > 0)

@@ -45,7 +45,7 @@ public class Zombie : MonoBehaviour
         healthBar = GameObject.Find("Zombie_HealthBar");
         healthBar.transform.position = Camera.main.WorldToScreenPoint((Vector2)transform.position + healthBarOffset);
         health = healthBase;
-        target = player;
+        lastPlayerPosition = transform.position;
     }
 
     private void Start()
@@ -181,7 +181,7 @@ public class Zombie : MonoBehaviour
         while (target == null && !isFeeding)
         {
             distanceToTarget = Vector2.Distance(new Vector2(lastPlayerPosition.x, transform.position.y), new Vector2(transform.position.x, transform.position.y));
-            if (distanceToTarget > 0.01f)
+            if (distanceToTarget > 0.025f)
             {
                 Vector2 direction = (new Vector2(lastPlayerPosition.x, 0) - new Vector2(transform.position.x, 0)).normalized;
                 move = new Vector2(direction.x * moveSpeed, 0);
@@ -267,11 +267,12 @@ public class Zombie : MonoBehaviour
         else
         {
             if (player != null)
-                if (!player.GetComponent<PlayerInteraction>().isHidden)
-                {
-                    lastPlayerPosition = player.transform.position;
-                    target = player;
-                }
+                if (Vector2.Distance(new Vector2(player.position.x, 0), new Vector2(transform.position.x, 0)) < detectionRange)
+                    if (!player.GetComponent<PlayerInteraction>().isHidden)
+                    {
+                        lastPlayerPosition = player.transform.position;
+                        target = player;
+                    }
         }
     }
 
