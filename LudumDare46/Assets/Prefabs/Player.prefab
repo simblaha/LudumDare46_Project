@@ -117,7 +117,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodPrefab: {fileID: 8385456892708440800, guid: d70dce6f08ad55146aa09e2b807e13b9,
     type: 3}
-  throwForce: 250
+  foodRepPrefab: {fileID: 8385456892708440800, guid: 456fd903f91d4ac48a113e5e4c0b51c2,
+    type: 3}
+  throwForce: 300
+  trajectoryDuration: 2
   foodCount: 0
   UI_FoodCount: {fileID: 0}
   hideVFX: {fileID: 991848999744502432, guid: ecab673b3d1bcaa479b0a7a3d94892fe, type: 3}
@@ -292,7 +295,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1574632255
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -5348267719531097350, guid: 37a3c581e3086c845a60633dce65f5ab,
     type: 3}

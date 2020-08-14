@@ -7,7 +7,9 @@ public class PlayerInteraction : MonoBehaviour
 {
     [Header("Food Throwing")]
     public GameObject foodPrefab;
+    public GameObject foodRepPrefab;
     public int throwForce;
+    public float trajectoryDuration;
     public int foodCount;
     public Text UI_FoodCount;
 
@@ -17,6 +19,8 @@ public class PlayerInteraction : MonoBehaviour
     public bool isHidden;
 
     private bool canHide;
+    private float trajectoryTime = 0;
+    private GameObject foodRep;
     private AudioSource audioSource;
     private SpriteRenderer sr;
     private Animator animator;
@@ -33,12 +37,33 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (foodCount > 0)
         {
-            if (Input.GetButtonDown("Throw"))
+            if (Input.GetButton("Throw"))
             {
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));
-                Vector2 direction = (mousePosition - transform.position).normalized;
+                if (trajectoryTime > 0)
+                    trajectoryTime -= Time.deltaTime;
+                else
+                {
+                    if (foodRep == null)
+                        foodRep = Instantiate(foodRepPrefab, (Vector2)transform.position + Vector2.up * 0.25f, Quaternion.identity);
+                    else if (!foodRep.activeSelf)
+                        foodRep.SetActive(true);
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z)));
+                    Vector2 direction = mousePosition - transform.position;
+                    foodRep.transform.position = (Vector2)transform.position + Vector2.up * 0.25f;
+                    foodRep.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    foodRep.GetComponent<Rigidbody2D>().AddForce(direction.normalized * throwForce);
+                    trajectoryTime = trajectoryDuration;
+                }
+            }
+            if (Input.GetButtonUp("Throw"))
+            {
+                if (foodRep.activeSelf)
+                    foodRep.SetActive(false);
+                trajectoryTime = 0;
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z)));
+                Vector2 direction = mousePosition - transform.position;
                 GameObject food = Instantiate(foodPrefab, (Vector2)transform.position + Vector2.up * 0.25f, Quaternion.identity);
-                food.GetComponent<Rigidbody2D>().AddForce(direction * throwForce);
+                food.GetComponent<Rigidbody2D>().AddForce(direction.normalized * throwForce);
                 foodCount--;
                 UI_FoodCount.text = foodCount + "";
                 animator.SetTrigger("Throw");
@@ -48,19 +73,9 @@ public class PlayerInteraction : MonoBehaviour
         }
         if (canHide)
         {
-            if (Input.GetAxisRaw("Vertical") > 0.1f)
+            if (Input.GetButtonDown("Interact"))
             {
-                if (!isHidden)
-                {
-                    Hide(true);
-                }
-            }
-            if (Input.GetAxisRaw("Vertical") < -0.1f)
-            {
-                if (isHidden)
-                {
-                    Hide(false);
-                }
+                Hide(!isHidden);
             }
         }
     }
