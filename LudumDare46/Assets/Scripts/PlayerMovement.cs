@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 move;
     private Rigidbody2D rb;
     private bool canClimb;
-    private bool isWalking;
+    public bool isWalking;
     private Animator animator;
     private Vector2 facingDirection;
     private AudioSource audioSource;

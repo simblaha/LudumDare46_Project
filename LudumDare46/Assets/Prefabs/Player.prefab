@@ -103,6 +103,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ebf39395c82b29b4f99dc05191b62b8d, type: 3}
   - {fileID: 8300000, guid: d5fe8bef478ceaf41bcebe50ddd64f95, type: 3}
   footstepDelay: 0.35
+  isWalking: 0
 --- !u!114 &-4605906181705924411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +120,11 @@ MonoBehaviour:
     type: 3}
   foodRepPrefab: {fileID: 8385456892708440800, guid: 456fd903f91d4ac48a113e5e4c0b51c2,
     type: 3}
-  throwForce: 300
-  trajectoryDuration: 2
+  foodSpawnOffset: {x: 0, y: 0.25, z: 0}
+  throwForce: 5
+  trajectoryLine: {fileID: 0}
+  trajectoryResolution: 10
+  trajectoryLimitY: 0
   foodCount: 0
   UI_FoodCount: {fileID: 0}
   hideVFX: {fileID: 991848999744502432, guid: ecab673b3d1bcaa479b0a7a3d94892fe, type: 3}
@@ -130,6 +134,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6d9fdc4bb949675459cf7d823279f812, type: 3}
   - {fileID: 8300000, guid: 45969c1811990a144a4f2e0b8bdf1a98, type: 3}
   isHidden: 0
+  throwVector: {x: 0, y: 0}
 --- !u!82 &958801090
 AudioSource:
   m_ObjectHideFlags: 0
