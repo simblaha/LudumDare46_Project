@@ -113,7 +113,6 @@ public class Zombie : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         health = Mathf.Clamp(health + amount, 0, healthBase);
-        healthBar.transform.Find("Fill").GetComponent<Image>().fillAmount = (float)health / (float)healthBase;
         if (amount < 0)
         {
             Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 3f);
@@ -124,6 +123,17 @@ public class Zombie : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             Destroy(healthBar);
             Destroy(gameObject);
+        }
+        else
+        {
+            for (int i = 0; i < healthBar.transform.childCount; i++)
+            {
+                Image heartFill = healthBar.transform.GetChild(i).GetChild(0).GetComponent<Image>();
+                if (i < health)
+                    heartFill.fillAmount = 1;
+                else
+                    heartFill.fillAmount = 0;
+            }
         }
     }
 

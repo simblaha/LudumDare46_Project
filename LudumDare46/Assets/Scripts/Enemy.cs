@@ -106,14 +106,32 @@ public class Enemy : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, facingDirection, detectionRange, detectedLayers);
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.transform.tag == "Player")
+            if (target == null)
             {
-                if (!hit.transform.GetComponent<PlayerInteraction>().isHidden && target == null)
+                if (hit.transform.tag == "Player")
+                {
+                    if (!hit.transform.GetComponent<PlayerInteraction>().isHidden)
+                        target = hit.transform;
+                }
+                else
+                {
                     target = hit.transform;
+                }
             }
             else
             {
-                target = hit.transform;
+                if (Vector2.Distance(target.position, transform.position) > Vector2.Distance(hit.transform.position, transform.position))
+                {
+                    if (hit.transform.tag == "Player")
+                    {
+                        if (!hit.transform.GetComponent<PlayerInteraction>().isHidden)
+                            target = hit.transform;
+                    }
+                    else
+                    {
+                        target = hit.transform;
+                    }
+                }
             }
         }
     }
